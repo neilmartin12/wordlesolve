@@ -209,7 +209,7 @@ class Solver:
         solutions: list[str] = None,
         count: int = 1,
         solution_freq: float = 4.0,
-        guess_freq: float = 0.0,
+        guess_freq: float = 1.17,
         hard: bool = False,
         verbosity: int = 0,
         retval=False,
