@@ -1,12 +1,23 @@
 """Entry point for wordlesolve package"""
 
 import argparse
+import sys
 
 from wordlesolve import Solver
 
 
 def main(clargs: argparse.Namespace):
-    """Run the Solver"""
+    """Run the Solver
+
+    Converts command line arguments into kwargs,
+    creates a Solver instance and calls the appropriate method:
+        Solver.solve() / Solver.play() / Solver.test()
+        with appropriate arguments
+
+    Args:
+        clargs: command line arguments as returned by argparse.parse_args()
+
+    """
 
     solver = Solver()
 
@@ -34,7 +45,7 @@ def main(clargs: argparse.Namespace):
 
             # test coune
             if clargs.testcount is not None:
-                kwargs["count"] = int(clargs.testcount)
+                kwargs["count"] = clargs.testcount
 
             # solutions
             if clargs.solutions is not None:
@@ -42,8 +53,7 @@ def main(clargs: argparse.Namespace):
 
             # solutions file
             if clargs.file is not None:
-                with open(clargs.file, encoding="utf-8") as file:
-                    kwargs["solutions"] = [word[:5].upper() for word in file]
+                kwargs["filename"] = clargs.file
 
             solver.test(**kwargs)
 
@@ -52,7 +62,15 @@ def main(clargs: argparse.Namespace):
         solver.solve(**kwargs)
 
 
-if __name__ == "__main__":
+def parse_args(args: list[str]) -> argparse.Namespace:
+    """Parse command line arguments
+
+    Args:
+        args: sys.argv[1:]
+
+    Returns:
+        Namespace object containing parsed argument data
+    """
 
     # Build command line options
     parser = argparse.ArgumentParser(
@@ -111,6 +129,8 @@ if __name__ == "__main__":
     # hard mode
     parser.add_argument("--hard", help="enable hard mode", action="store_true")
 
-    args = parser.parse_args()
+    return parser.parse_args(args)
 
-    main(args)
+
+if __name__ == "__main__":  # pragma: no cover
+    main(parse_args(sys.argv[1:]))

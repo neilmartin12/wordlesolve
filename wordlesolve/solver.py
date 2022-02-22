@@ -14,6 +14,7 @@ from concurrent.futures import ProcessPoolExecutor
 import datetime as dt
 from functools import partial
 import random
+import string
 from typing import Optional
 
 import colorama as cr  # type: ignore
@@ -207,6 +208,7 @@ class Solver:
     def test(
         self,
         solutions: list[str] = None,
+        filename: str = None,
         count: int = 1,
         solution_freq: float = 4.0,
         guess_freq: float = 1.17,
@@ -221,14 +223,19 @@ class Solver:
                 list of solutions to test
                 if None (the default) random words will be used
 
+            filename:
+                file of solutions to test
+                must be a text file with one solution per line
+                if solutions is not None this argument is ignored
+
             count:
                 number of different solutions to test
-                if solutions is not None this argument is ignored
+                if solutions or filename is not None this argument is ignored
                 if zero all words in the word list will be tested
 
             solution_freq:
                 minimum word frequency the solution may have (default 4.0)
-                if solutions is not None this argument is ignored
+                if solutions or filename is not None this argument is ignored
 
             guess_freq:
                 minimum word frequency any guesses may have (default 0.0)
@@ -256,7 +263,54 @@ class Solver:
         words = self._filter_words(freq=guess_freq)
 
         # Get the list of solutions
-        if solutions is None:
+        if solutions:
+
+            # Filter out any invalid solutions
+            solutions = [
+                word.upper()
+                for word in solutions
+                if len(word) == 5
+                and all(letter in string.ascii_letters for letter in word)
+            ]
+
+        else:
+            # Solutions from file
+            if filename is not None:
+                try:
+                    with open(filename, encoding="utf-8") as file:
+
+                        # Validate words and add to solutions list
+                        solutions = [
+                            word[:5].upper()
+                            for word in file
+                            if (
+                                len(word) >= 5
+                                and all(
+                                    letter in string.ascii_letters
+                                    for letter in word[:5]
+                                )
+                            )
+                        ]
+
+                # Manage file error
+                except OSError:
+                    print(
+                        cr.Style.BRIGHT
+                        + cr.Fore.RED
+                        + "Unable to read solutions file\n"
+                    )
+
+                # Manage invalid or empty file
+                else:
+                    if not solutions:
+                        print(
+                            cr.Style.BRIGHT
+                            + cr.Fore.RED
+                            + "File has no valid solutions"
+                        )
+
+        # Generate solutions from word list
+        if not solutions:
             solutions = self._filter_words(freq=solution_freq)
             if count > 0:
                 solutions = random.sample(solutions, count)

@@ -241,6 +241,42 @@ class TestTest:
         outcomes = solver.test(count=3, retval=True)
         assert len(outcomes) == 3
 
+    def test_solutions(self):
+        "solutions argument"
+
+        solver = Solver()
+        outcomes = solver.test(solutions=["SHAKE", "CYNIC", "CAULK"], retval=True)
+        assert len(outcomes) == 3
+
+        # Invalid words are filtered out
+        outcomes = solver.test(solutions=["SHAKE", "CYNIC", "CAULK", "X"], retval=True)
+        assert len(outcomes) == 3
+
+    def test_solutions_file(self):
+        "filename argument"
+
+        solver = Solver()
+        outcomes = solver.test(filename="tests/test_solutions.txt", retval=True)
+        assert len(outcomes) == 10
+
+    def test_file_error(self, capsys):
+        "filename argument supplies invalid filename"
+
+        solver = Solver()
+        solver.test(filename="nosuchfile.txt")
+
+        out = capsys.readouterr().out
+        assert "Unable to read solutions file" in out
+
+    def test_empty_file(self, capsys):
+        "filename argument supplies empty file"
+
+        solver = Solver()
+        solver.test(filename="tests/test_empty.txt")
+
+        out = capsys.readouterr().out
+        assert "File has no valid solutions" in out
+
 
 class TestGetOutcome:
     "_get_outcome() function"

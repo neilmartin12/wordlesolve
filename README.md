@@ -1,54 +1,143 @@
 # wordlesolve
 > wordlesolve solves Wordle!
 
-wordlesolve will solve almost any Wordle puzzle within six guesses. Just follow the suggestions and type in the results.
-
-Also included is a console-based Wordle game.
+*wordlesolve* will solve almost any Wordle puzzle within six guesses. Just follow the suggestions and type in the results.
 
 ## Installation
-
-OS X & Linux:
 
 ```sh
 pip install wordlesolve
 ```
 
-## Usage example
+## Usage
+
+### Solve mode
 
 ```sh
-Wordle Solver
--------------
-Original game at https://www.nytimes.com/games/wordle/index.html
+python3 -m wordlesolve
+```
+or
+```sh
+>>> from wordlesolve import Solver
+>>> solver = Solver()
+>>> solver.solve()
+```
 
-Guess number 1
-Suggestions: TARES, LARES, RALES, NARES, RATES
-Your guess:  RATES
-Outcome:     00010
+*wordlesolve* gives you up to five suggestions for each guess.
+Type in the guess you use and the outcome Wordle gives for each letter: 0 for grey, 1 for yellow, 2 for green.
 
-Guess number 2
-Suggestions: LEONE, BELIE, LONGE, GENIE, LOGIE
-Your guess:  GENIE
-Outcome:     10002
+For example if you guess RATES and get
 
-Guess number 3
-Suggestions: BODGE, BUDGE, BOUGH, BODLE, BOUGE
-Your guess:  BODGE
-Outcome:     02222
+![Screenshot](img/rates.png)
 
-Guess number 4
-Suggestions: PROWL, PLOWS, WHELP, PAWLS, PLEWS
-Your guess:  PROWL
-Outcome:     00100
+enter:
+* Your guess: RATES
+* Outcome: 02100
 
-Guess number 5
-Suggestions: DODGE
-Your guess:  DODGE
-Outcome:     22222
+*wordlesolve* will use that information to suggest some more guesses, getting you closer to the solution each time!
 
-Congratulations - you solved it!
+![Screenshot](img/solvemode.png)
 
-````
+### Play mode
 
+*wordlesolve* also includes a play mode - a console-based Wordle clone. Not nearly as good as [the real thing](https://www.nytimes.com/games/wordle/index.html) but fun to practise!
+
+```sh
+python3 -m wordlesolve -p
+```
+or
+```sh
+>>> from wordlesolve import Solver
+>>> solver = Solver()
+>>> solver.play()
+```
+
+![Screenshot](img/playmode.png)
+
+### Test mode
+
+Also included is a test mode - this was originally intended to test the algorithm during development. Test mode runs the solve algorithm against any number of solutions, either provided or randomly selected from the built-in database, and provides information on how quickly each was solved.
+
+```sh
+python3 -m wordlesolve -t -c 10 -v
+```
+or
+```sh
+>>> from wordlesolve import Solver
+>>> solver = Solver()
+>>> solver.test(count=10, verbosity=1)
+```
+
+![Screenshot](img/testmode.png)
+
+### Options
+Each *wordlesolve* mode takes a number of configuration options, either as command line switches or keyword argments.
+
+<table>
+    <tr>
+        <th>Command line</th>
+        <th>Keyword</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Solve mode</th>
+        <th>Play mode</th>
+        <th>Test mode</th>
+    </tr>
+    <tr>
+        <td>--hard</td>
+        <td>hard</td>
+        <td>bool</td>
+        <td>Use hard mode</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>-g --guessfreq</td>
+        <td>guess_freq</td>
+        <td>float</td>
+        <td>Minimum word frequency allowed for guesses</td>
+        <td>yes</td>
+        <td>yes</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>--solutionfreq</td>
+        <td>solution_freq</td>
+        <td>float</td>
+        <td>Minimum word frequency allowed for solutions</td>
+        <td>no</td>
+        <td>yes</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>-v --verbosity</td>
+        <td>verbosity</td>
+        <td>count (cl) int (kw)</td>
+        <td>Verbosity level for test results</td>
+        <td>no</td>
+        <td>no</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>--solutions</td>
+        <td>solutions</td>
+        <td>list[str]</td>
+        <td>Solutions to test</td>
+        <td>no</td>
+        <td>no</td>
+        <td>yes</td>
+    </tr>
+    <tr>
+        <td>-f --file</td>
+        <td>filename</td>
+        <td>str</td>
+        <td>Path to a text file containing solutions to test (one word per line)</td>
+        <td>no</td>
+        <td>no</td>
+        <td>yes</td>
+    </tr>
+</table>
 
 ## Release History
 
