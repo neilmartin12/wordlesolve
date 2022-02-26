@@ -1,8 +1,21 @@
 """Functions to manage console input and output
 
-Functions:
-    print_word(word, outcome): play mode - print word to terminal
+Classes:
+    GuessOutcome: outcome of a single guess
+
+Types:
+    TestOutcome: list[GuessOutcomes]
+
+Output functions:
     display_test_outcome(outcomes, time, hard, verbosity): display the outcome of a test solve
+    get_printable_alphabet(status, sep=""): returns the alphabet color-coded by status
+    print_alphabet(status, sep=""): prints the alphabet color-coded by status
+    print_word(word, outcome): play mode - print word to terminal
+
+Input functions:
+    get_guess_input(width=0): obtains valid guess from the user
+    get_outcome_input(width): obtains valid outcome from the user
+    get_yn_input(prompt): obtains y/n input from the user
 
 """
 
@@ -127,7 +140,7 @@ def get_printable_alphabet(status: dict[str, int], sep: str = " ") -> str:
 def display_test_outcomes(
     outcomes: dict[str, TestOutcome], time: float, hard: bool, verbosity: int
 ):
-    """Display the outcome of a test solve
+    """Display the outcome of a test run
 
     Args:
         outcomes: test outcomes dict
@@ -188,14 +201,16 @@ def _verbose_test_outcomes(
 
     print()
 
-    # Verbosity >= 1: guesses per word
+    # Verbosity >= 1: show guesses for each word
     for word in sorted(outcomes.keys()):
         guesses = outcomes[word]
         outcome_str = (
             "not solved" if word in unsolved else f"solved in {len(guesses)} guesses"
         )
         guess_list = ", ".join(guess.guess for guess in guesses)
-        print(f"\x1b[0;32m{word}\x1b[0;0m: {outcome_str} ({guess_list})")
+        print(
+            f"{cr.Fore.GREEN}{word}{cr.Style.RESET_ALL}: {outcome_str} ({guess_list})"
+        )
 
         # Verbosity == 2: list out matches and scores
         if verbosity > 1:

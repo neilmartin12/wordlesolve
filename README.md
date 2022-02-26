@@ -31,8 +31,10 @@ For example if you guess RATES and get
 ![Screenshot](img/rates.png)
 
 enter:
-* Your guess: RATES
-* Outcome: 02100
+```sh
+Your guess:  RATES
+Outcome:     02100
+````
 
 *wordlesolve* will use that information to suggest some more guesses, getting you closer to the solution each time!
 
@@ -71,7 +73,7 @@ or
 ![Screenshot](img/testmode.png)
 
 ### Options
-Each *wordlesolve* mode takes a number of configuration options, either as command line switches or keyword argments.
+Each *wordlesolve* mode takes a number of options, either as command line switches or keyword arguments.
 
 <table>
     <tr>
@@ -84,7 +86,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <th>Test mode</th>
     </tr>
     <tr>
-        <td>--hard</td>
+        <td>&#8209;&#8209;hard</td>
         <td>hard</td>
         <td>bool</td>
         <td>Use hard mode</td>
@@ -93,7 +95,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <td>yes</td>
     </tr>
     <tr>
-        <td>-g --guessfreq</td>
+        <td>-g &#8209;&#8209;guessfreq</td>
         <td>guess_freq</td>
         <td>float</td>
         <td>Minimum word frequency allowed for guesses</td>
@@ -102,7 +104,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <td>yes</td>
     </tr>
     <tr>
-        <td>--solutionfreq</td>
+        <td>&#8209;&#8209;solutionfreq</td>
         <td>solution_freq</td>
         <td>float</td>
         <td>Minimum word frequency allowed for solutions</td>
@@ -111,7 +113,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <td>yes</td>
     </tr>
     <tr>
-        <td>-v --verbosity</td>
+        <td>-v &#8209;&#8209;verbosity</td>
         <td>verbosity</td>
         <td>count (cl) int (kw)</td>
         <td>Verbosity level for test results</td>
@@ -120,7 +122,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <td>yes</td>
     </tr>
     <tr>
-        <td>--solutions</td>
+        <td>&#8209;&#8209;solutions</td>
         <td>solutions</td>
         <td>list[str]</td>
         <td>Solutions to test</td>
@@ -129,7 +131,7 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
         <td>yes</td>
     </tr>
     <tr>
-        <td>-f --file</td>
+        <td>-f &#8209;&#8209;file</td>
         <td>filename</td>
         <td>str</td>
         <td>Path to a text file containing solutions to test (one word per line)</td>
@@ -141,8 +143,8 @@ Each *wordlesolve* mode takes a number of configuration options, either as comma
 
 ## Release History
 
-* 0.0.1
-    * Work in progress
+* 0.1.0
+    * Initial release
 
 ## Meta
 

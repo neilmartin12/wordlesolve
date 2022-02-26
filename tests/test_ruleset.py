@@ -3,7 +3,7 @@
 
 import pytest
 
-from wordlesolve.ruleset import Rule, RuleSet
+from wordlesolve.ruleset import Rule, RuleSet, WordScore
 
 
 @pytest.fixture
@@ -298,3 +298,70 @@ class TestWordScoring:
 
         # Should indicate ABOUT
         assert scores[0].word == "ABOUT"
+
+    def test_word_ordering_by_score(self, ten_words, monkeypatch):
+        "Words should be ordered by score, descending"
+
+        def scored_words(words):
+            "Patched scores"
+            return [WordScore(word, index) for index, word in enumerate(words)]
+
+        # Patch scoring
+        monkeypatch.setattr(
+            "wordlesolve.ruleset._score_words", lambda a, b, c: scored_words(ten_words)
+        )
+
+        # Should be sorted highest to lowest score i.e. last to first word
+        rule_set = RuleSet()
+        scores = rule_set.score_words(ten_words, ten_words)
+        assert scores[0].word == ten_words[-1]
+        assert scores[-1].word == ten_words[0]
+
+    def test_word_ordering_by_frequency(self, ten_words, monkeypatch):
+        "Words with equal score should be ordered by frequency, descending"
+
+        def scored_words(words):
+            "Patched scores"
+            return [WordScore(word, 100) for word in words]
+
+        # Patch scoring
+        monkeypatch.setattr(
+            "wordlesolve.ruleset._score_words", lambda a, b, c: scored_words(ten_words)
+        )
+
+        # Should be sorted highest to lowest frequency i.e. last to first word
+        rule_set = RuleSet()
+        scores = rule_set.score_words(ten_words, ten_words)
+        for index in range(len(scores) - 1):
+            assert scores[index].frequency >= scores[index + 1].frequency
+
+    def test_frequency_added_to_top_five_words(self, ten_words):
+        "The top 5 words should always be frequency scored"
+
+        rule_set = RuleSet()
+        scores = rule_set.score_words(ten_words, ten_words)
+
+        for index in range(5):
+            assert scores[index].frequency > 0
+
+    def test_frequency_breaks_tie_beyond_fifth_word(self, ten_words, monkeypatch):
+        "Frequency will be added to words 5-6-7 if the scores are the same"
+
+        def scored_words(words):
+            "Patched scores will be 0-0-0-1-1-1-2-2-2-3"
+            return [WordScore(word, index // 3) for index, word in enumerate(words)]
+
+        # Patch scoring
+        monkeypatch.setattr(
+            "wordlesolve.ruleset._score_words", lambda a, b, c: scored_words(ten_words)
+        )
+
+        rule_set = RuleSet()
+        scores = rule_set.score_words(ten_words, ten_words)
+
+        # First seven words should have frequency - 8-9-10 should not
+        for index, score in enumerate(scores):
+            if index < 7:
+                assert score.frequency > 0
+            else:
+                assert score.frequency == 0
