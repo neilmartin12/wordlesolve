@@ -4,33 +4,20 @@
 
 Has 3 public methods:
 
-    Solver.solve() - solve Wordle puzzle
-    Solver.play() - play Wordle game
-    Solver.test() - test Solver algorithm
+    .solve(guess_freq=1.17, hard=False)
+        Solve Wordle puzzle.
+        Runs an interactive console session providing context-sensitive
+        guess suggestions to solve a Wordle puzzle.
 
+    .play(solution_freq=4.0, guess_freq=0.0, hard=False)
+        Play Wordle game.
+        Runs a console-based Wordle clone.
 
-word frequency
---------------
+    .test(solutions=None, filename=None, count=1, solution_freq=4.0, guess_freq=1.17,
+            hard=False, verbosity=0, retval=False)
+        Test Solver algorithm.
+        Runs an automated test session and displays its results.
 
-wordlesolve has a database of almost 13,000 five-letter words
-(the same list used in the original Wordle game).
-Many of these words are quite obscure however and will
-not be known to most users.
-For that reason wordlesolve uses the wordfreq package
-(https://github.com/rspeer/wordfreq)
-to use more frequently encountered words wherever appropriate.
-
-wordfreq is used in 2 ways:
-
-    1. To set minimum word frequency limits for guesses or solutions
-       via keyword arguments guess_freq / solution_freq
-
-    2. To tie-break between words with equal scores
-       (the more frequent word will be preferred)
-
-The wordfreq.zipf_frequency() function is used throughout -
-for the words in the wordlesolver database this gives a
-frequency of between 0.0 (very rare) to 6.4 (very common).
 
 """
 from concurrent.futures import ProcessPoolExecutor
@@ -237,7 +224,7 @@ class Solver:
         guess_freq: float = 1.17,
         hard: bool = False,
         verbosity: int = 0,
-        retval=False,
+        retval: bool = False,
     ) -> Optional[dict[str, TestOutcome]]:
         """Run test mode
 

@@ -1,4 +1,30 @@
-"""Entry point for wordlesolve package"""
+"""Entry point for wordlesolve package
+
+>>> python3 -m wordlesolve [options]
+
+usage: wordlesolve [-h] [-p] [-s] [-t] [-g GUESSFREQ] [--solutionfreq SOLUTIONFREQ] [-c TESTCOUNT] [--solutions [SOLUTIONS ...]]
+                   [-f FILE] [-v] [--hard]
+
+wordlesolve solves Wordle!
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p, --play            play Wordle
+  -s, --solve           solve Wordle (the default)
+  -t, --test            run test solves
+  -g GUESSFREQ, --guessfreq GUESSFREQ
+                        set minimum guess frequency
+  --solutionfreq SOLUTIONFREQ
+                        set minimum solution frequency (test mode only)
+  -c TESTCOUNT, --testcount TESTCOUNT
+                        number of tests to run (test mode only)
+  --solutions [SOLUTIONS ...]
+                        5-letter solutions to test (test mode only)
+  -f FILE, --file FILE  text file with 5-letter solutions to test (one word per line)
+  -v, --verbosity       increase test mode verbosity
+  --hard                enable hard mode
+
+"""
 
 import argparse
 import sys
@@ -74,7 +100,7 @@ def parse_args(args: list[str]) -> argparse.Namespace:
 
     # Build command line options
     parser = argparse.ArgumentParser(
-        prog="wordlesolve", description="Solve Wordle puzzles"
+        prog="wordlesolve", description="wordlesolve solves Wordle!"
     )
 
     # play mode

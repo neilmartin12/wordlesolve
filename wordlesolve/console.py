@@ -8,8 +8,8 @@ Types:
 
 Output functions:
     display_test_outcome(outcomes, time, hard, verbosity): display the outcome of a test solve
-    get_printable_alphabet(status, sep=""): returns the alphabet color-coded by status
-    print_alphabet(status, sep=""): prints the alphabet color-coded by status
+    get_printable_alphabet(status, sep=" "): returns the alphabet color-coded by status
+    print_alphabet(status, sep=" "): prints the alphabet color-coded by status
     print_word(word, outcome): play mode - print word to terminal
 
 Input functions:
@@ -146,7 +146,7 @@ def display_test_outcomes(
         outcomes: test outcomes dict
         time: time taken to run tests
         hard: True for hard mode
-        verbosity: level of output
+        verbosity: level of output (0-2)
     """
 
     # Get the tally of guesses taken
@@ -196,7 +196,7 @@ def _verbose_test_outcomes(
     Args:
         outcomes: test outcomes data
         unsolved: list of unsolved words
-        verbosity: level of output
+        verbosity: level of output (1 or 2)
     """
 
     print()

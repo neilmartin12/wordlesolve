@@ -1,12 +1,17 @@
-"""WordleSolver RuleSet class.
+"""RuleSet and associated classes
 
-This module does the heavy lifting for the wordlesolver app.
+Classes:
+    Rule - rule for a letter of the alphabet
+    RuleSet - set of rules for this Wordle game
+    WordScore - scoring for a single word
+
+This module does the heavy lifting for the wordlesolve package.
 As clues are uncovered it adds rules to the RuleSet e.g.
     - there is no 'P' in the solution
     - there is at least one 'A' and it can't be the first letter in the word
     - the first letter is 'C'
 
-Each rule is represented by an instance of the Rule class,
+Each rule is represented by an instance of the Rule class.
 Rule is a dataclass with attributes:
     - count: number of confirmed occurrences of this letter in the solution
     - count_op: whether count is the exact or minimum number of occurrences
@@ -45,20 +50,6 @@ WordScore is a subclass of NamedTuple with attributes:
     - score: the score for this word
     - frequency: word frequency (used to tiebreak between words with equal score)
 
-
-word scoring
-------------
-
-RuleSet.score_words(words, matches) scores with the following methodology:
-    - analyse matches list for frequency and position of letters
-        - the more frequently a letter appears, or appears in a specific position,
-          the higher its score
-        - if a letter's frequency or position is known, it will not be scored
-          e.g. if we know there is only one P and it is the first letter,
-          no occurrences of P will be scored.
-    - score full word list based on the analysis of matching words
-        - the higher the score, the better the word will be
-          at eliminating or confirming letters and their positions.
 """
 
 from collections import Counter
