@@ -170,7 +170,7 @@ These scores are added together to give each word a total, indicating how useful
 
 ## Word frequency
 
-*wordlesolve* has a database of almost 13,000 five-letter words (the same list used in the original Wordle game). Many of these words are quite obscure and will not be known to most users. For that reason wordlesolve uses [the wordfreq package](https://github.com/rspeer/wordfreq) to use only more frequently encountered words wherever appropriate.
+*wordlesolve* has a database of almost 13,000 five-letter words (the same list used in the original Wordle game). Many of these words are quite obscure and will not be known to most users. For that reason wordlesolve uses [the wordfreq library](https://github.com/rspeer/wordfreq) to use only more frequently encountered words wherever appropriate.
 
 wordfreq is used in 2 ways:
 * To set minimum word frequency limits for guesses or solutions via keyword arguments guess_freq / solution_freq or their command line equivalents

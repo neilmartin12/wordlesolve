@@ -9,7 +9,7 @@ Has 3 public methods:
         Runs an interactive console session providing context-sensitive
         guess suggestions to solve a Wordle puzzle.
 
-    .play(solution_freq=4.0, guess_freq=0.0, hard=False)
+    .play(solution_freq=3.2, guess_freq=0.0, hard=False)
         Play Wordle game.
         Runs a console-based Wordle clone.
 
@@ -125,7 +125,7 @@ class Solver:
                 break
 
     def play(
-        self, solution_freq: float = 4.0, guess_freq: float = 0.0, hard: bool = False
+        self, solution_freq: float = 3.2, guess_freq: float = 0.0, hard: bool = False
     ):
         """Run play mode.
 
@@ -220,7 +220,7 @@ class Solver:
         solutions: list[str] = None,
         filename: str = None,
         count: int = 1,
-        solution_freq: float = 4.0,
+        solution_freq: float = 3.2,
         guess_freq: float = 1.17,
         hard: bool = False,
         verbosity: int = 0,
@@ -322,7 +322,7 @@ class Solver:
         # Generate solutions from word list
         if not solutions:
             solutions = self._filter_words(freq=solution_freq)
-            if count > 0:
+            if 0 < count < len(solutions):
                 solutions = random.sample(solutions, count)
 
         # Start a timer

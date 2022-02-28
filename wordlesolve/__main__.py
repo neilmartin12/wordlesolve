@@ -2,8 +2,8 @@
 
 >>> python3 -m wordlesolve [options]
 
-usage: wordlesolve [-h] [-p] [-s] [-t] [-g GUESSFREQ] [--solutionfreq SOLUTIONFREQ] [-c TESTCOUNT] [--solutions [SOLUTIONS ...]]
-                   [-f FILE] [-v] [--hard]
+usage: wordlesolve [-h] [-p] [-s] [-t] [-g GUESSFREQ] [--solutionfreq SOLUTIONFREQ]
+                   [-c TESTCOUNT] [--solutions [SOLUTIONS ...]] [-f FILE] [-v] [--hard]
 
 wordlesolve solves Wordle!
 
