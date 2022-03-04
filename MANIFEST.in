@@ -1,0 +1,4 @@
+# MANIFEST.in for wordlesolve
+
+# Include image files for README.md
+graft img

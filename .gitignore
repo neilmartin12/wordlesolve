@@ -1,5 +1,7 @@
-__pycache__/
 **/.DS_Store
+*.egg-info
 .coverage
-htmlcov/
+__pycache__/
 devdata/
+dist/
+htmlcov/
