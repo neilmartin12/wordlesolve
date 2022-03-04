@@ -188,6 +188,8 @@ Feel free to play around and let me know what you think.
 
 ## Release History
 
+* 0.1.1
+    * Fixed bug when passing a testcount number from the command line
 * 0.1.0
     * Initial release
 

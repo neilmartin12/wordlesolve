@@ -94,7 +94,7 @@ class TestMain:
         )
         main(args)
         out = capsys.readouterr().out
-        assert "'count': '10'" in out
+        assert "'count': 10" in out
 
     def test_file(self, monkeypatch, capsys):
         "test solutions file"

@@ -71,7 +71,7 @@ def main(clargs: argparse.Namespace):
 
             # test coune
             if clargs.testcount is not None:
-                kwargs["count"] = clargs.testcount
+                kwargs["count"] = int(clargs.testcount)
 
             # solutions
             if clargs.solutions is not None:
